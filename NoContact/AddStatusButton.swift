@@ -8,18 +8,29 @@
 import SwiftUI
 
 struct AddStatusButton: View {
-    let addAction: () -> Void
+    let addAction: (String) -> Void
+    @State private var isRequestingStatusType = false
+    @State private var newStatusType: String = ""
     
     var body: some View {
         Button(action: {
-            addAction()
+            isRequestingStatusType.toggle()
         }) {
             Text("Add New Status")
         }
-        .padding()
+        .alert("Create a new type to monitor", isPresented: $isRequestingStatusType) {
+            TextField("Example: Stalked Socials", text: $newStatusType)
+            Button("OK", action: authenticate)
+            Button("Cancel", role: .cancel) { }
+                .padding()
+        }
+    }
+        
+    func authenticate() {
+        addAction(newStatusType)
     }
 }
 
-#Preview {
-    AddStatusButton(addAction: {})
-}
+//#Preview {
+//    AddStatusButton(addAction: {})
+//}

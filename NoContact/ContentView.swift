@@ -45,8 +45,8 @@ struct ContentView: View {
         }
     }
     
-    private func addNewStatus() {
-        statusCounts.append(Status(date: dateFormatter.string(from: Date()), count: 0))
+    private func addNewStatus(_ statusType:String) {
+        statusCounts.append(Status(type: statusType, date: dateFormatter.string(from: Date()), count: 0))
     }
     
     private func deleteStatus(at offsets: IndexSet) {
@@ -54,19 +54,20 @@ struct ContentView: View {
     }
     
     private func saveStatusCountsToUserDefaults() {
-        let data = statusCounts.map { [$0.date, $0.count] }
+        let data = statusCounts.map { [$0.type, $0.date, $0.count] }
         UserDefaults.standard.set(data, forKey: statusCountsKey)
     }
     
     private func loadStatusCountsFromUserDefaults() {
         if let data = UserDefaults.standard.array(forKey: statusCountsKey) as? [[Any]] {
             statusCounts = data.compactMap { tuple in
-                guard tuple.count == 2,
-                      let date = tuple[0] as? String,
-                      let count = tuple[1] as? Int else {
+                guard tuple.count == 3, // Ensure there are three elements in the tuple
+                      let type = tuple[0] as? String, // Extract type from tuple
+                      let date = tuple[1] as? String,
+                      let count = tuple[2] as? Int else {
                     return nil
                 }
-                return Status(date: date, count: count)
+                return Status(type: type, date: date, count: count) // Create Status object
             }
         }
     }

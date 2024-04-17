@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct StatusRowView: View {
+    let type: String
     let date: String
     let count: Int
     let incrementAction: () -> Void
     
     var body: some View {
         HStack {
+            Text(type)
+            Spacer()
             Text(date)
             Spacer()
-            Button(action: {
-                incrementAction()
-            }) {
+            Button(action: incrementAction) {
                 Text("\(count)")
             }
         }
@@ -26,7 +27,8 @@ struct StatusRowView: View {
 }
 
 #Preview {
-    StatusRowView(date: "Apr 14, 2024",
+    StatusRowView(type: "Example",
+                  date: "Apr 14, 2024",
                   count: 0,
                   incrementAction: {})
         .previewLayout(.fixed(width: 300, height: 50))

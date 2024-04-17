@@ -13,7 +13,8 @@ struct StatusListView: View {
     var body: some View {
         List {
             ForEach(statusCounts) { status in
-                StatusRowView(date: status.date,
+                StatusRowView(type: status.type,
+                              date: status.date,
                               count: status.count,
                               incrementAction: { self.incrementCount(forStatus: status) })
             }
@@ -35,9 +36,9 @@ struct StatusListView: View {
 struct StatusListView_Previews: PreviewProvider {
     static var previews: some View {
         StatusListView(statusCounts: .constant([
-            Status(date: "Apr 12, 2024", count: 3),
-            Status(date: "Apr 13, 2024", count: 5),
-            Status(date: "Apr 14, 2024", count: 2)
+            Status(type: "Example", date: "Apr 12, 2024", count: 3),
+            Status(type: "Example", date: "Apr 13, 2024", count: 5),
+            Status(type: "Example", date: "Apr 14, 2024", count: 2)
         ]))
     }
 }

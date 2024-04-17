@@ -9,6 +9,7 @@ import Foundation
 
 struct Status: Identifiable, Equatable {
     let id = UUID()
+    let type: String
     let date: String
     var count: Int
 }
